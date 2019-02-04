@@ -86,11 +86,16 @@ window.addEventListener('load', () => {
   })
 })
 
-// focus
-// document.querySelector('.text-content h2').addEventListener('focus', (e) => {
-//   console.log(`Event is: ${JSON.stringify(e)}`)
-//   e.target.style.color = 'purple'
-// })
+// focus & blue
+window.addEventListener('focus', (e) => {
+  console.log('FOCUS')
+  document.querySelector('.intro h2').textContent = `FOCUS`
+})
+
+window.addEventListener('blur', (e) => {
+  console.log('LOST FOCUS')
+  document.querySelector('.intro h2').textContent = "LOST FOCUS"
+})
 
 // resize
 window.addEventListener('resize', (e) => {
