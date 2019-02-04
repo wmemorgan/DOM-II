@@ -1,11 +1,11 @@
 
 //==== Create Unique Event Listeners
 // mouseover & mouseleave
-document.querySelectorAll('img')
+document.querySelectorAll('h1, h2, h4')
   .forEach(elem => {
-    elem.addEventListener('mouseover', event => event.target.style.opacity = 0.3)
+    elem.addEventListener('mouseover', event => event.target.style.transform = 'scale(2)')
     console.log(`mouseover event on ${elem}`)
-    elem.addEventListener('mouseleave', event => event.target.style.opacity = 1)
+    elem.addEventListener('mouseleave', event => event.target.style.transform = 'scale(1)')
     console.log(`mouseover event on ${elem}`)
   })
 
