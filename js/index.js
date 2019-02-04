@@ -20,14 +20,17 @@ document.querySelector('html').addEventListener('wheel', event => {
   console.log(`Using the wheel`)
   event.target.style.backgroundColor = 'green'
 })
+//stop propagation
+document.querySelector('header').addEventListener('wheel', event => event.stopPropagation())
+document.querySelector('.home').addEventListener('wheel', event => event.stopPropagation())
 
 // drag / drop
 //code is based on article by Kirupa: https://www.kirupa.com/html5/drag.htm
-const dragStart = (e) => {
-  initialX = e.clientX - xOffset
-  initialY = e.clientY - yOffset
+const dragStart = (event) => {
+  initialX = event.clientX - xOffset
+  initialY = event.clientY - yOffset
 
-  if (e.target) {
+  if (event.target) {
     active = true
   }
 }
@@ -39,23 +42,23 @@ const drop = () =>{
   active = false
 }
 
-const drag = (e) => {
+const drag = (event) => {
   if (active) {
 
-    e.preventDefault()
+    event.preventDefault()
 
-    currentX = e.clientX - initialX
-    currentY = e.clientY - initialY
+    currentX = event.clientX - initialX
+    currentY = event.clientY - initialY
 
     xOffset = currentX
     yOffset = currentY
 
-    setTranslate(currentX, currentY, e.target)
+    setTranslate(currentX, currentY, event.target)
   }
 }
 
-const setTranslate = (xPos, yPos, el) => {
-  el.style.transform = `translate3d(${xPos}px,  ${yPos}px, 0)`
+const setTranslate = (xPos, yPos, elem) => {
+  elem.style.transform = `translate3d(${xPos}px,  ${yPos}px, 0)`
 }
 
 
@@ -87,25 +90,25 @@ window.addEventListener('load', () => {
 })
 
 // focus & blue
-window.addEventListener('focus', (e) => {
+window.addEventListener('focus', () => {
   console.log('FOCUS')
   document.querySelector('.intro h2').textContent = `FOCUS`
 })
 
-window.addEventListener('blur', (e) => {
+window.addEventListener('blur', () => {
   console.log('LOST FOCUS')
   document.querySelector('.intro h2').textContent = "LOST FOCUS"
 })
 
 // resize
-window.addEventListener('resize', (e) => {
+window.addEventListener('resize', () => {
   alert(`Page reset`)
   location.reload()
 })
 
 // scroll
-window.addEventListener('scroll', (e) => {
-  console.log(`Scroll event: ${e}`)
+window.addEventListener('scroll', (event) => {
+  console.log(`Scroll event: ${event}`)
   
   document.querySelectorAll('p').forEach(elem => {
     elem.style.opacity = 0.3
@@ -129,7 +132,7 @@ input.setAttribute(
 )
 document.querySelector('footer').prepend(input)
 
-input.addEventListener('select', e => {
+input.addEventListener('select', () => {
   let selection = event.target.value.substring(event.target.selectionStart, event.target.selectionEnd)
   console.log(`${selection}`)
   const selectedText = document.createElement('p')
@@ -137,12 +140,20 @@ input.addEventListener('select', e => {
   document.querySelector('footer').prepend(selectedText)
 })
 
+//stop propagation of wheel event
+input.addEventListener('wheel', event => event.stopPropagation())
+
 // dblclick
 document.querySelectorAll('.btn ').forEach(elem => {
-  elem.addEventListener('dblclick', (e) => {
-    console.log(`Event is: ${JSON.stringify(e)}`)
-    e.target.style.color = 'red'
-    e.target.style.backgroundColor = 'white'
-    e.target.textContent = 'Double-Clicked!'
+  elem.addEventListener('dblclick', (event) => {
+    console.log(`Double-click event is: ${JSON.stringify(event.isTrusted)}`)
+    event.target.style.color = 'red'
+    event.target.style.backgroundColor = 'white'
+    event.target.textContent = 'Double-Clicked!'
   })
 })
+
+//preventDefault()
+const homeLink = document.querySelector('.nav-link:first-child')
+homeLink.href = '/'
+homeLink.addEventListener('click', event => event.preventDefault())
